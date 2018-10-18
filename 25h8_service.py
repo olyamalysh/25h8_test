@@ -11,12 +11,12 @@ tz = str(datetime.now(pytz.timezone('Europe/Kiev')))[26:]
 
 
 def prepare_tender_data_asset(tender_data):
-    tender_data['data']['assetCustodian']['identifier']['id'] = u'01010122'
-    tender_data['data']['assetCustodian']['name'] = u'ТОВ Орган Приватизации'
-    tender_data['data']['assetCustodian']['identifier']['legalName'] = u'ТОВ Орган Приватизации'
-    tender_data['data']['assetCustodian']['contactPoint']['name'] = u'Гоголь Микола Васильович'
-    tender_data['data']['assetCustodian']['contactPoint']['telephone'] = u'+38(101)010-10-10'
-    tender_data['data']['assetCustodian']['contactPoint']['email'] = u'testprozorroyowner@gmail.com'
+    tender_data['data']['assetCustodian']['identifier']['id'] = u'23429895'
+    tender_data['data']['assetCustodian']['name'] = u'Тест'
+    tender_data['data']['assetCustodian']['identifier']['legalName'] = u'Тест'
+    tender_data['data']['assetCustodian']['contactPoint']['name'] = u'Гоголь Микола'
+    tender_data['data']['assetCustodian']['contactPoint']['telephone'] = u'+38(654)324-56-70'
+    tender_data['data']['assetCustodian']['contactPoint']['email'] = u'malysheva.olya02@gmail.com'
     for item in range(len(tender_data['data']['items'])):
         if tender_data['data']['items'][item]['address']['region'] == u'місто Київ':
             tender_data['data']['items'][item]['address']['region'] = u'Київ'
