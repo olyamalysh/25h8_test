@@ -194,5 +194,5 @@ def download_file(url, filename, folder):
 
 
 def get_upload_file_path():
-    return os.path.join(os.getcwd(), 'src/robot_tests.broker.setam/Doc.pdf')
+    return os.path.join(os.getcwd(), 'src/robot_tests.broker.25h8/Doc.pdf')
 

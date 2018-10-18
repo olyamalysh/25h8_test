@@ -4,10 +4,10 @@ Library  BuiltIn
 Library  Collections
 Library  String
 Library  DateTime
-Library  setam_service.py
+Library  25h8_service.py
 
 *** Variables ***
-${host}  https://npl.setam.net.ua
+${host}  http://test.25h8.auction
 
 *** Keywords ***
 
@@ -34,10 +34,10 @@ ${host}  https://npl.setam.net.ua
 Авторизація
     [Arguments]  ${username}
     Click Element  xpath=//*[contains(@href, "/login")]
-    Wait Until Element Is Visible  xpath=//button[@name="login-button"]
-    Input Text  xpath=//input[@id="loginform-username"]  ${USERS.users['${username}'].login}
-    Input Text  xpath=//input[@id="loginform-password"]  ${USERS.users['${username}'].password}
-    Click Element  xpath=//button[@name="login-button"]
+    Wait Until Element Is Visible  xpath=//input[@id="username"]
+    Input Text  xpath=//input[@id="username"]  ${USERS.users['${username}'].login}
+    Input Text  xpath=//input[@id="password"]  ${USERS.users['${username}'].password}
+    Click Element  xpath=//button[contains(@class,"sign-in-button")][contains(text(), "Увійти")]
 
 
 ###############################################################################################################
@@ -51,7 +51,7 @@ ${host}  https://npl.setam.net.ua
     Click Element  xpath=//button[@data-target="#toggleRight"]
     Wait Until Element Is Visible  xpath=//nav[@id="toggleRight"]/descendant::a[contains(@href, "/assets/index")]
     Click Element  xpath=//nav[@id="toggleRight"]/descendant::a[contains(@href, "/assets/index")]
-    setam.Закрити Модалку
+    25h8.Закрити Модалку
     Click Element  xpath=//a[contains(@href, "/buyer/asset/create")]
     Input Text  id=asset-title  ${tender_data.data.title}
     Input Text  id=asset-description  ${tender_data.data.description}
@@ -105,12 +105,12 @@ ${host}  https://npl.setam.net.ua
 
 Додати актив до об'єкта МП
     [Arguments]  ${username}  ${tender_uaid}  ${item_data}
-    setam.Пошук об’єкта МП по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук об’єкта МП по ідентифікатору  ${username}  ${tender_uaid}
     Click Element  xpath=//a[contains(@href, "asset/update")]
     Wait Until Element Is Visible  xpath=//form[@id="asset-form"]
     Scroll To And Click Element  xpath=//button[@id="add-item-to-asset"]
-    Run Keyword And Ignore Error  setam.Додати предмет МП  ${item_data}
-    Run Keyword And Ignore Error  setam.Scroll To And Click Element   id=btn-submit-form
+    Run Keyword And Ignore Error  25h8.Додати предмет МП  ${item_data}
+    Run Keyword And Ignore Error  25h8.Scroll To And Click Element   id=btn-submit-form
     Wait Until Element Is Visible  xpath=//div[@data-test-id="tenderID"]
 
 
@@ -135,11 +135,11 @@ ${host}  https://npl.setam.net.ua
 
 Оновити сторінку з об'єктом МП
     [Arguments]  ${username}  ${tender_uaid}
-    setam.Пошук об’єкта МП по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук об’єкта МП по ідентифікатору  ${username}  ${tender_uaid}
 
 Внести зміни в об'єкт МП
     [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
-    setam.Пошук об’єкта МП по ідентифікатору  ${tender_owner}  ${tender_uaid}
+    25h8.Пошук об’єкта МП по ідентифікатору  ${tender_owner}  ${tender_uaid}
     Click Element  xpath=//a[contains(@href, "asset/update")]
     Wait Until Element Is Visible  xpath=//form[@id="asset-form"]
     Run Keyword If  '${fieldname}' == 'title'  Input Text  id=asset-title  ${fieldvalue}
@@ -151,7 +151,7 @@ ${host}  https://npl.setam.net.ua
 
 Внести зміни в актив об'єкта МП
     [Arguments]  ${username}  ${item_id}  ${tender_uaid}  ${field_name}  ${field_value}
-    setam.Пошук об’єкта МП по ідентифікатору  ${tender_owner}  ${tender_uaid}
+    25h8.Пошук об’єкта МП по ідентифікатору  ${tender_owner}  ${tender_uaid}
     Click Element  xpath=//a[contains(@href, "asset/update")]
     Wait Until Element Is Visible  xpath=//form[@id="asset-form"]
     ${quantity}=  Convert To String  ${field_value}
@@ -162,7 +162,7 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити документ для видалення об'єкта МП
     [Arguments]  ${username}  ${tender_uaid}  ${file_path}
-    setam.Пошук об’єкта МП по ідентифікатору  ${tender_owner}  ${tender_uaid}
+    25h8.Пошук об’єкта МП по ідентифікатору  ${tender_owner}  ${tender_uaid}
     Click Element  id=delete-asset
     Wait Until Element Is Visible  id=form-delete-asset
     Choose File  name=FileUpload[file][]  ${file_path}
@@ -176,12 +176,12 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити ілюстрацію в об'єкт МП
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}
-  setam.Завантажити документ в об'єкт МП з типом  ${username}  ${tender_uaid}  ${filepath}  illustration
+  25h8.Завантажити документ в об'єкт МП з типом  ${username}  ${tender_uaid}  ${filepath}  illustration
 
 
 Завантажити документ в об'єкт МП з типом
     [Arguments]  ${username}  ${tender_uaid}  ${file_path}  ${doc_type}
-    setam.Пошук об’єкта МП по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук об’єкта МП по ідентифікатору  ${username}  ${tender_uaid}
     Click Element  xpath=//a[contains(@href, "asset/update")]
     Wait Until Element Is Visible  xpath=//form[@id="asset-form"]
     Choose File  xpath=(//*[@action="/tender/fileupload"]/input)[last()]  ${file_path}
@@ -237,7 +237,7 @@ ${host}  https://npl.setam.net.ua
 
 Отримати кількість активів в об'єкті МП
   [Arguments]  ${username}  ${tender_uaid}
-  setam.Пошук об’єкта МП по ідентифікатору  ${username}  ${tender_uaid}
+  25h8.Пошук об’єкта МП по ідентифікатору  ${username}  ${tender_uaid}
   ${number_of_items}=  Get Matching Xpath Count  xpath=//div[@data-test-id="asset.item.description"]
   ${number_of_items}=  Convert To Integer  ${number_of_items}
   [Return]  ${number_of_items}
@@ -257,7 +257,7 @@ ${host}  https://npl.setam.net.ua
 
 Створити лот
   [Arguments]  ${username}  ${tender_data}  ${asset_uaid}
-  setam.Пошук об’єкта МП по ідентифікатору  ${username}  ${asset_uaid}
+  25h8.Пошук об’єкта МП по ідентифікатору  ${username}  ${asset_uaid}
   Click Element  xpath=//a[contains(@href, "lot/create?asset")]
   ${decision_date}=  convert_date_for_decision  ${tender_data.data.decisions[0].decisionDate}
   Input Text   name=Lot[decisions][0][decisionDate]   ${decision_date}
@@ -274,7 +274,7 @@ ${host}  https://npl.setam.net.ua
   ${minimalStep}=  Convert To String  ${auction.minimalStep.amount}
   ${guarantee}=  Convert To String  ${auction.guarantee.amount}
   ${registrationFee}=  Convert To String  ${auction.registrationFee.amount}
-  setam.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
+  25h8.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
   Click Element  xpath=//a[contains(@href, "lot/update")]
   Wait Until Element Is Visible  id=auctions-checkBox
   Click Element  id=auctions-checkBox
@@ -331,7 +331,7 @@ ${host}  https://npl.setam.net.ua
 
 Оновити сторінку з лотом
     [Arguments]  ${username}  ${tender_uaid}
-    setam.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
 
 
 Отримати інформацію із лоту
@@ -406,12 +406,12 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити ілюстрацію в лот
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}
-  setam.Завантажити документ в лот з типом  ${username}  ${tender_uaid}  ${filepath}  illustration
+  25h8.Завантажити документ в лот з типом  ${username}  ${tender_uaid}  ${filepath}  illustration
 
 
 Завантажити документ в лот з типом
     [Arguments]  ${username}  ${tender_uaid}  ${file_path}  ${doc_type}
-    setam.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
     Click Element  xpath=//a[contains(@href, "lot/update")]
     Wait Until Element Is Visible  id=decision-title
     Choose File  xpath=(//*[@action="/tender/fileupload"]/input)[last()]  ${file_path}
@@ -430,7 +430,7 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити документ в умови проведення аукціону
     [Arguments]  ${username}  ${tender_uaid}  ${file_path}  ${doc_type}  ${index}
-    setam.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
     Click Element  xpath=//a[contains(@href, "lot/update")]
     Wait Until Element Is Visible  id=decision-title
     Choose File  xpath=(//*[@action="/tender/fileupload"]/input)[last()]  ${file_path}
@@ -450,7 +450,7 @@ ${host}  https://npl.setam.net.ua
 
 Внести зміни в лот
     [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
-    setam.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
     Click Element  xpath=//a[contains(@href, "lot/update")]
     Wait Until Element Is Visible  id=decision-title
     Run Keyword If  '${fieldname}' == 'title'  Input Text  id=lot-title  ${fieldvalue}
@@ -462,7 +462,7 @@ ${host}  https://npl.setam.net.ua
 
 Внести зміни в актив лоту
   [Arguments]  ${username}  ${item_id}  ${tender_uaid}  ${field_name}  ${field_value}
-  setam.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
+  25h8.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
   Click Element  xpath=//a[contains(@href, "lot/update")]
   Wait Until Element Is Visible  id=decision-title
   ${quantity}=  Convert To String  ${field_value}
@@ -473,7 +473,7 @@ ${host}  https://npl.setam.net.ua
 
 Внести зміни в умови проведення аукціону
     [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}  ${index}
-    setam.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
     Click Element  xpath=//a[contains(@href, "lot/update")]
     Wait Until Element Is Visible  id=decision-title
     Run Keyword If  '${fieldname}' == 'value.amount'  Input Amount  name=Lot[auctions][${index}][value][amount]  ${fieldvalue}
@@ -487,12 +487,12 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити документ для видалення лоту
   [Arguments]  ${username}  ${tender_uaid}  ${file_path}
-  setam.Завантажити документ в лот з типом  ${username}  ${tender_uaid}  ${filepath}  cancellationDetails
+  25h8.Завантажити документ в лот з типом  ${username}  ${tender_uaid}  ${filepath}  cancellationDetails
 
 
 Видалити лот
     [Arguments]  ${username}  ${tender_uaid}
-    setam.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук лоту по ідентифікатору  ${username}  ${tender_uaid}
     Click Element  id=delete_btn
     Wait Until Element Is Visible  //button[@data-bb-handler="confirm"]
     Click Element  //button[@data-bb-handler="confirm"]
@@ -525,12 +525,12 @@ ${host}  https://npl.setam.net.ua
 
 Оновити сторінку з тендером
     [Arguments]  ${username}  ${tender_uaid}
-    setam.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
 
 
 Активувати процедуру
     [Arguments]  ${username}  ${tender_uaid}
-    setam.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
     # Активація процедури на майданчику здійснюється автоматично
 
 
@@ -563,7 +563,7 @@ ${host}  https://npl.setam.net.ua
 
 Скасувати закупівлю
     [Arguments]  ${username}  ${tender_uaid}  ${cancellation_reason}  ${file_path}  ${cancellation_description}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Click Element  xpath=//*[@data-test-id="sidebar.cancell"]
     Select From List By Value  //*[@id="cancellation-relatedlot"]  tender
     Select From List By Label  //*[@id="cancellation-reason"]  ${cancellation_reason}
@@ -580,7 +580,7 @@ ${host}  https://npl.setam.net.ua
 
 Подати цінову пропозицію
     [Arguments]   ${username}  ${tender_uaid}  ${bid}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Wait Until Element Is Visible  xpath=//input[@id="value-amount"]
     Convert Input Data To String  xpath=//input[@id="value-amount"]  ${bid.data.value.amount}
     Wait Until Keyword Succeeds   5 x   1 s  Run Keywords
@@ -590,7 +590,7 @@ ${host}  https://npl.setam.net.ua
     ...  Click Element  xpath=//button[@id="submit_bid"]
     ...  AND  Wait Until Page Contains  очікує модерації
     Перевірити і підтвердити пропозицію  ${username}  ${bid.data.qualified}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Page Should Contain Element  //*[contains(@class, "label-success")][contains(text(), "опубліковано")]
 
 
@@ -604,7 +604,7 @@ ${host}  https://npl.setam.net.ua
 
 Змінити цінову пропозицію
     [Arguments]  ${username}  ${tender_uaid}  ${field}  ${value}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Wait Until Element Is Visible  xpath=//input[@id="value-amount"]
     Convert Input Data To String  xpath=//input[@id="value-amount"]  ${value}
     Click Element  xpath=//button[@id="submit_bid"]
@@ -612,7 +612,7 @@ ${host}  https://npl.setam.net.ua
 
 Скасувати цінову пропозицію
     [Arguments]  ${username}  ${tender_uaid}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Scroll To And Click Element  //button[@name="delete_bids"]
     Wait Until Element Is Visible  //*[@class="bootbox-body"][contains(text(), "Видалити ставки")]
     Click Element  //button[contains(text(), "Застосувати")]
@@ -621,7 +621,7 @@ ${host}  https://npl.setam.net.ua
 
 Отримати інформацію із пропозиції
     [Arguments]  ${username}  ${tender_uaid}  ${field}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Scroll To  xpath=//input[@id="value-amount"]
     ${value}=  Get Value  xpath=//input[@id="value-amount"]
     ${value}=  adapt_data  ${field}  ${value}
@@ -629,9 +629,9 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити документ в ставку
     [Arguments]  ${username}  ${file_path}  ${tender_uaid}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     ${value}=  Get Element Attribute  xpath=//input[@id="value-amount"]@value
-    setam.Скасувати цінову пропозицію  ${username}  ${tender_uaid}
+    25h8.Скасувати цінову пропозицію  ${username}  ${tender_uaid}
     Scroll To  xpath=//*[@action="/tender/fileupload"]/input
     Choose File  xpath=//*[@action="/tender/fileupload"]/input  ${file_path}
     Wait Until Element Is Visible  xpath=(//input[@class="file_name"])[last()]
@@ -648,7 +648,7 @@ ${host}  https://npl.setam.net.ua
 
 Задати запитання на тендер
     [Arguments]  ${username}  ${tender_uaid}  ${question}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Wait Until Element Is Visible  xpath=//*[@data-test-id="sidebar.questions"]
     Click Element  xpath=//*[@data-test-id="sidebar.questions"]
     Input Text  xpath=//input[@id="question-title"]  ${question.data.title}
@@ -660,7 +660,7 @@ ${host}  https://npl.setam.net.ua
 
 Задати запитання на предмет
     [Arguments]  ${username}  ${tender_uaid}  ${item_id}  ${question}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Wait Until Element Is Visible  xpath=//*[@data-test-id="sidebar.questions"]
     Click Element  xpath=//*[@data-test-id="sidebar.questions"]
     Input Text  xpath=//input[@id="question-title"]  ${question.data.title}
@@ -673,17 +673,17 @@ ${host}  https://npl.setam.net.ua
 Відповісти на запитання
     [Arguments]  ${tender_owner}  ${tender_uaid}  ${answer}  ${question_id}
     Run Keyword And Ignore Error  Click Element  xpath=//*[@data-test-id="sidebar.questions"]
-    setam.Закрити Модалку
+    25h8.Закрити Модалку
     Click Element  xpath=//*[@id="slidePanelToggle"]
     Input Text  //*[@data-test-id="question.title"][contains(text(), "${question_id}")]/following-sibling::form[contains(@action, "tender/questions")]/descendant::textarea  ${answer.data.answer}
     Scroll To And Click Element  xpath=//*[@data-test-id="question.title"][contains(text(), "${question_id}")]/../descendant::button[@name="answer_question_submit"]
 
 Отримати інформацію із запитання
     [Arguments]  ${username}  ${tender_uaid}  ${object_id}  ${field}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Click Element  xpath=//*[@data-test-id="sidebar.questions"]
     Wait Until Element Is Not Visible  xpath=//*[@data-test-id="sidebar.questions"]
-    setam.Закрити Модалку
+    25h8.Закрити Модалку
     ${value}=  Get Text  //*[contains(text(), '${object_id}')]/../descendant::*[@data-test-id='question.${field}']
     [Return]  ${value}
 
@@ -691,7 +691,7 @@ ${host}  https://npl.setam.net.ua
 Отримати посилання на аукціон для учасника
     [Arguments]  ${username}  ${tender_uaid}
     Switch Browser  my_alias
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Wait Until Element Is Visible  //a[@class="auction_seller_url"]
     ${current_url}=  Get Location
     Execute Javascript  window['url'] = null; $.get( "${host}/seller/tender/updatebid", { id: "${current_url.split("/")[-1]}"}, function(data){ window['url'] = data.data.participationUrl },'json');
@@ -702,7 +702,7 @@ ${host}  https://npl.setam.net.ua
 
 Отримати посилання на аукціон для глядача
     [Arguments]  ${viewer}  ${tender_uaid}
-    setam.Пошук Тендера По Ідентифікатору  ${viewer}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${viewer}  ${tender_uaid}
     ${link}=  Get Element Attribute  xpath=//*[contains(text(), "Посилання")]/../descendant::*[@class="h4"]/a@href
     [Return]  ${link}
 
@@ -721,7 +721,7 @@ ${host}  https://npl.setam.net.ua
 
 Отримати кількість авардів в тендері
     [Arguments]  ${username}  ${tender_uaid}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
     ${awards}=  Get Matching Xpath Count  xpath=//div[contains(@class, "qtable")]/descendant::div[@data-mtitle="№"]
     ${n_awards}=  Convert To Integer  ${awards}
@@ -730,7 +730,7 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити протокол погодження в авард
     [Arguments]  ${username}  ${tender_uaid}  ${file_path}  ${award_index}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
     Wait Until Element Is Visible  xpath=//button[contains(text(), "Опублікувати рішення про викуп")]
     Click Element  xpath=//button[contains(text(), "Опублікувати рішення про викуп")]
@@ -750,7 +750,7 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити протокол аукціону в авард
     [Arguments]  ${username}  ${tender_uaid}  ${file_path}  ${award_index}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
     Wait Until Element Is Visible  xpath=//button[contains(text(), "Завантаження протоколу")]
     Click Element  xpath=//button[contains(text(), "Завантаження протоколу")]
@@ -771,7 +771,7 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити протокол дискваліфікації в авард
     [Arguments]  ${username}  ${tender_uaid}  ${file_path}  ${award_index}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
     Wait Until Element Is Visible  xpath=//button[@data-toggle="modal"][contains(text(), "Дисквалiфiкувати")]
     Click Element  xpath=//button[@data-toggle="modal"][contains(text(), "Дисквалiфiкувати")]
@@ -794,7 +794,7 @@ ${host}  https://npl.setam.net.ua
 
 Скасування рішення кваліфікаційної комісії
     [Arguments]  ${username}  ${tender_uaid}  ${number}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
     Wait Until Element Is Visible  //button[contains(text(), "Забрати гарантійний внесок")]
     Click Element  //button[contains(text(), "Забрати гарантійний внесок")]
@@ -808,7 +808,7 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити протокол скасування в контракт
     [Arguments]  ${username}  ${tender_uaid}  ${file_path}  ${award_index}
-    setam.Завантажити протокол дискваліфікації в авард  ${username}  ${tender_uaid}  ${file_path}  ${award_index}
+    25h8.Завантажити протокол дискваліфікації в авард  ${username}  ${tender_uaid}  ${file_path}  ${award_index}
 
 
 Скасувати контракт
@@ -822,7 +822,7 @@ ${host}  https://npl.setam.net.ua
 
 Встановити дату підписання угоди
     [Arguments]  ${username}  ${tender_uaid}  ${index}  ${date}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
     Wait Until Element Is Visible  xpath=//button[contains(text(), "Контракт")]
     Click Element  xpath=//button[contains(text(), "Контракт")]
@@ -834,7 +834,7 @@ ${host}  https://npl.setam.net.ua
 
 Завантажити угоду до тендера
     [Arguments]  ${username}  ${tender_uaid}  ${number}  ${file_path}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
     Wait Until Element Is Visible  xpath=//button[contains(text(), "Контракт")]
     Click Element  xpath=//button[contains(text(), "Контракт")]
@@ -850,7 +850,7 @@ ${host}  https://npl.setam.net.ua
 
 Підтвердити підписання контракту
     [Arguments]  ${username}  ${tender_uaid}  ${number}
-    setam.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
+    25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
     Click Element  xpath=//input[@id="contract-activate"]
     Wait Until Element Is Visible  xpath=//h4[contains(text(), "Активація контракту")]
@@ -944,7 +944,7 @@ JQuery Ajax Should Complete
 
 Отримати інформацію із договору
     [Arguments]  ${username}  ${contract_uaid}  ${field}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     ${value}=  Get Text  xpath=//div[@data-test-id="status"]
     ${value}=  adapt_lot_data  ${field}  ${value}
     [Return]  ${value}
@@ -952,14 +952,14 @@ JQuery Ajax Should Complete
 
 Отримати інформацію з активу в договорі
     [Arguments]  ${username}  ${contract_uaid}  ${item_id}  ${field_name}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     ${item_value}=  Get Text  xpath=//div[@data-test-id="item.description"][contains(text(), "${item_id}")]
     [Return]  ${item_value}
 
 
 Вказати дату отримання оплати
     [Arguments]  ${username}  ${contract_uaid}  ${dateMet}  ${index}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[@class="mk-btn mk-btn_default"][contains(text(), "Оплата договору")]
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//div[@class="h2 text-center"][contains(text(), "Оплата договору")]
     Click Element  xpath=//select[@id="milestone-status"]
@@ -971,7 +971,7 @@ JQuery Ajax Should Complete
 
 Підтвердити відсутність оплати
     [Arguments]  ${username}  ${contract_uaid}  ${index}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[@class="mk-btn mk-btn_default"][contains(text(), "Оплата договору")]
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//div[@class="h2 text-center"][contains(text(), "Оплата договору")]
     Select From List By Value  xpath=//select[@id="milestone-status"]  notMet
@@ -981,7 +981,7 @@ JQuery Ajax Should Complete
 
 Завантажити наказ про завершення приватизації
     [Arguments]  ${username}  ${contract_uaid}  ${file_path}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[contains(text(), 'Наказ про завершення')]
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//button[contains(text(), 'Завантажити дані')]
     Click Element  xpath=//div[contains(text(), 'Додати документ')]
@@ -996,7 +996,7 @@ JQuery Ajax Should Complete
 
 Вказати дату прийняття наказу
     [Arguments]  ${username}  ${contract_uaid}  ${dateMet}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[contains(text(), 'Наказ про завершення')]
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//button[contains(text(), 'Завантажити дані')]
     Click Element  xpath=//div[contains(text(), 'Додати документ')]
@@ -1014,7 +1014,7 @@ JQuery Ajax Should Complete
 
 Підтвердити відсутність наказу про приватизацію
     [Arguments]  ${username}  ${contract_uaid}  ${file_path}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[contains(text(), 'Наказ про завершення')]
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//button[contains(text(), 'Завантажити дані')]
     Click Element  xpath=//div[contains(text(), 'Додати документ')]
@@ -1031,14 +1031,14 @@ JQuery Ajax Should Complete
 
 Вказати дату виконання умов контракту
     [Arguments]  ${username}  ${contract_uaid}  ${dateMet}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[contains(text(), 'Виконання умов продажу')]
     Input Date Auction  xpath=//input[@name="Milestone[dateMet]"]  ${dateMet}
 
 
 Підтвердити невиконання умов приватизації
     [Arguments]  ${username}  ${contract_uaid}
-    setam.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
+    25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[contains(text(), 'Виконання умов продажу')]
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//button[contains(text(), 'Завантажити дані')]
     Click Element  xpath=//div[contains(text(), 'Додати документ')]
