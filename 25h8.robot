@@ -825,9 +825,9 @@ ${host}  http://test.25h8.auction
     [Arguments]  ${username}  ${tender_uaid}  ${index}  ${date}
     25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
-    Wait Until Element Is Visible  xpath=//button[contains(text(), "Контракт")]
-    Click Element  xpath=//button[contains(text(), "Контракт")]
-    Wait Until Element Is Visible  xpath=//div[contains(@class, "h2")][contains(text(), "Контракт")]
+    Wait Until Element Is Visible  xpath=//button[contains(text(), "Договір")]
+    Click Element  xpath=//button[contains(text(), "Договір")]
+    Wait Until Element Is Visible  xpath=//div[contains(@class, "h2")][contains(text(), "Договір")]
     Input Date Auction  name=Contract[dateSigned]  ${date}
     Click Element  xpath=//button[@id="contract-fill-data"]
     Wait Until Element Is Not Visible  xpath=//button[@id="contract-fill-data"]
@@ -837,9 +837,9 @@ ${host}  http://test.25h8.auction
     [Arguments]  ${username}  ${tender_uaid}  ${number}  ${file_path}
     25h8.Пошук Тендера По Ідентифікатору  ${username}  ${tender_uaid}
     Перейти на сторінку кваліфікації
-    Wait Until Element Is Visible  xpath=//button[contains(text(), "Контракт")]
-    Click Element  xpath=//button[contains(text(), "Контракт")]
-    Wait Until Element Is Visible  //div[contains(@class, "h2")][contains(text(), "Контракт")]
+    Wait Until Element Is Visible  xpath=//button[contains(text(), "Договір")]
+    Click Element  xpath=//button[contains(text(), "Договір")]
+    Wait Until Element Is Visible  //div[contains(@class, "h2")][contains(text(), "Договір")]
     Choose File  xpath=//div[@id="uploadcontract"]/descendant::input  ${file_path}
     Input Text  xpath=//input[@id="contract-contractnumber"]  1234567890
     Click Element  xpath=//button[@id="contract-fill-data"]
