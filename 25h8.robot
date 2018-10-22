@@ -965,7 +965,8 @@ JQuery Ajax Should Complete
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//div[@class="h2 text-center"][contains(text(), "Оплата договору")]
     Click Element  xpath=//select[@id="milestone-status"]
     ${date_paid}=  convert_date_for_date_paid  ${dateMet}
-    Input Date Auction  xpath=//input[@name="Milestone[dateMet]"]  ${date_paid}
+    Select From List By Value  xpath=//select[@id="milestone-status"]  met
+    #Input Date Auction  xpath=//input[@name="Milestone[dateMet]"]  ${date_paid}
     Click Element  xpath=//button[@class="mk-btn mk-btn_accept"][contains(text(),"Завантажити дані")]
     Wait Until Element Is Not Visible  xpath=//*[contains(@class, "modal-backdrop")]
 
@@ -987,7 +988,7 @@ JQuery Ajax Should Complete
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//button[contains(text(), 'Завантажити дані')]
     Click Element  xpath=//div[contains(text(), 'Додати документ')]
     Choose File  xpath=//input[contains(@id,"ajax-upload-id")]  ${file_path}
-    Select From List By Label  xpath=//select[@id="document-0-documenttype"]  Наказ про приватизацію
+    Select From List By Label  xpath=//select[@id="document-0-documenttype"]  Наказ про завершення приватизації об’єкта
     Click Element  xpath=//button[@class="mk-btn mk-btn_accept"]
 #    Wait Until Element Is Not Visible  xpath=//*[contains(@class, "modal-backdrop")]
 #    Wait Until Keyword Succeeds  30 x  10 s  Run Keywords
