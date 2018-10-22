@@ -966,7 +966,7 @@ JQuery Ajax Should Complete
     Click Element  xpath=//select[@id="milestone-status"]
     Select From List By Value  xpath=//select[@id="milestone-status"]  met
     ${date_paid}=  convert_date_for_date_paid  ${dateMet}
-    #Input Date Auction  xpath=//input[@name="Milestone[dateMet]"]  ${date_paid}
+    Input Text  xpath=//input[@name="Milestone[dateMet]"]  ${date_paid}
     Click Element  xpath=//button[@class="mk-btn mk-btn_accept"][contains(text(),"Завантажити дані")]
     Wait Until Element Is Not Visible  xpath=//*[contains(@class, "modal-backdrop")]
 
