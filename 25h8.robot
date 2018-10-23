@@ -1006,7 +1006,7 @@ JQuery Ajax Should Complete
     ${file_path}=   get_upload_file_path
     Choose File  xpath=//input[contains(@id,"ajax-upload-id")]  ${file_path}
     Wait Until Page Contains Element  xpath=//select[@id="document-0-documenttype"]/option[@value="approvalProtocol"]
-    Select From List By Label  xpath=//select[@id="document-0-documenttype"]  Наказ про приватизацію
+    Select From List By Value  xpath=//select[@id="document-0-documenttype"]  approvalProtocol
     ${date_nakaz}  convert_date_for_date_paid  ${dateMet}
     Input Date Auction  xpath=//input[@name="Milestone[dateMet]"]  ${date_nakaz}
     Click Element  xpath=//button[@class="mk-btn mk-btn_accept"]
