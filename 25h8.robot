@@ -1038,8 +1038,18 @@ JQuery Ajax Should Complete
     25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[contains(text(), 'Виконання умов продажу')]
     Wait Until Keyword Succeeds  10 x  1 s  Wait Until Element Is Visible  xpath=//button[contains(text(), 'Завантажити дані')]
+    Click Element  xpath=//div[contains(text(), 'Додати документ')]
+    ${file_path}=   get_upload_file_path
+    Choose File  xpath=//input[contains(@id,"ajax-upload-id")]  ${file_path}
+    Wait Until Page Contains Element  xpath=//select[@id="document-0-documenttype"]/option[@value="contractNotice"]
     ${date_umovy}  convert_date_for_date_paid  ${dateMet}
     Input Text  xpath=//input[@name="Milestone[dateMet]"]  ${date_umovy}
+    Click Element  xpath=//button[@class="mk-btn mk-btn_accept"]
+    Wait Until Element Is Not Visible  xpath=//*[contains(@class, "modal-backdrop")]
+    Wait Until Keyword Succeeds  30 x  10 s  Run Keywords
+    ...  Reload Page
+    ...  AND  Wait Until Page Does Not Contain   Документ завантажується...  10
+
 
 
 Підтвердити невиконання умов приватизації
