@@ -1042,6 +1042,7 @@ JQuery Ajax Should Complete
     ${file_path}=   get_upload_file_path
     Choose File  xpath=//input[contains(@id,"ajax-upload-id")]  ${file_path}
     Wait Until Page Contains Element  xpath=//select[@id="document-0-documenttype"]/option[@value="contractNotice"]
+    Select From List By Value  xpath=//select[@id="document-0-documenttype"]  contractNotice
     ${date_umovy}  convert_date_for_date_paid  ${dateMet}
     Input Text  xpath=//input[@name="Milestone[dateMet]"]  ${date_umovy}
     Click Element  xpath=//button[@class="mk-btn mk-btn_accept"]
