@@ -1037,7 +1037,8 @@ JQuery Ajax Should Complete
     [Arguments]  ${username}  ${contract_uaid}  ${dateMet}
     25h8.Пошук договору по ідентифікатору  ${username}  ${contract_uaid}
     Click Element  xpath=//button[contains(text(), 'Виконання умов продажу')]
-    Input Date Auction  xpath=//input[@name="Milestone[dateMet]"]  ${dateMet}
+    ${date_umovy}  convert_date_for_date_paid  ${dateMet}
+    Input Text  xpath=//input[@name="Milestone[dateMet]"]  ${date_umovy}
 
 
 Підтвердити невиконання умов приватизації
