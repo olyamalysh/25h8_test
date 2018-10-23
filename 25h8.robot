@@ -1005,6 +1005,7 @@ JQuery Ajax Should Complete
     Click Element  xpath=//div[contains(text(), 'Додати документ')]
     ${file_path}=   get_upload_file_path
     Choose File  xpath=//input[contains(@id,"ajax-upload-id")]  ${file_path}
+    Wait Until Page Contains Element  xpath=//select[@id="document-0-documenttype"]/option[@value="approvalProtocol"]
     Select From List By Label  xpath=//select[@id="document-0-documenttype"]  Наказ про приватизацію
     ${date_nakaz}  convert_date_for_date_paid  ${dateMet}
     Input Date Auction  xpath=//input[@name="Milestone[dateMet]"]  ${date_nakaz}
